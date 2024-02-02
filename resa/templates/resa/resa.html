@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Inclure le CSS de Flatpickr -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+    <!-- Inclure le JavaScript de Flatpickr -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <title>Document</title>
+</head>
+<body>
+    <h1>Hello</h1>
+
+    <form method="post" action="{% url 'datePick' %}">
+        {% csrf_token %}
+        
+        <!-- Autres champs du formulaire... -->
+    
+        <!-- Champ de date avec date picker -->
+        <input type="text" id="id_date" name="date" class="datepicker">
+        
+        <script>
+            
+            document.addEventListener('DOMContentLoaded', function () {
+                var datesNonDispo = JSON.parse("{{ datesNonDispo|escapejs }}");
+                var dateInput = document.getElementById('id_date');
+
+                flatpickr(dateInput, {
+                    disable: datesNonDispo,
+                    dateFormat: 'Y-m-d',
+                    // Autres options du date picker...
+                });
+            });
+        </script>
+    
+        <button type="submit">Envoyer</button>
+    </form>
+
+</body>
+</html>
